@@ -18,7 +18,7 @@ import pandas as pd
 
 from utils import load_params, ensure_local_deps
 
-
+# ----------------- config -----------------
 # Will be populated from params.yaml
 PARAMS = load_params()
 INGEST_PARAMS = PARAMS["data_ingestion"]
@@ -31,6 +31,7 @@ TEST_PATH = os.path.join(RAW_DIR, "test.csv")
 
 
 def configure_logging() -> None:
+    # ----------------- logging setup -----------------
     os.makedirs(LOG_DIR, exist_ok=True)
 
     log_format = "%(asctime)s [%(levelname)s] %(message)s"
@@ -50,12 +51,14 @@ def configure_logging() -> None:
 
 
 def ensure_directories() -> None:
+    # ----------------- directories -----------------
     for path in (DATA_DIR, RAW_DIR, LOG_DIR):
         os.makedirs(path, exist_ok=True)
     logging.info("Ensured data directories exist: %s", RAW_DIR)
 
 
 def download_dataset(url: str = INGEST_PARAMS["url"]) -> pd.DataFrame:
+    # ----------------- download -----------------
     logging.info("Downloading dataset from %s", url)
     df = pd.read_csv(url)
     logging.info("Downloaded dataset with %d rows and %d columns", *df.shape)
@@ -65,6 +68,7 @@ def download_dataset(url: str = INGEST_PARAMS["url"]) -> pd.DataFrame:
 def train_test_split_df(
     df: pd.DataFrame, test_size: float = INGEST_PARAMS["test_size"], seed: int = INGEST_PARAMS["random_state"]
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # ----------------- split -----------------
     if not 0 < test_size < 1:
         raise ValueError("test_size must be between 0 and 1.")
     logging.info("Splitting dataset: test_size=%.2f, random_state=%d", test_size, seed)
@@ -75,6 +79,7 @@ def train_test_split_df(
 
 
 def save_splits(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
+    # ----------------- save -----------------
     logging.info("Saving train split to %s", TRAIN_PATH)
     train_df.to_csv(TRAIN_PATH, index=False)
     logging.info("Saving test split to %s", TEST_PATH)
@@ -83,6 +88,7 @@ def save_splits(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    # ----------------- main -----------------
     ensure_local_deps()
     configure_logging()
     logging.info("Starting data ingestion pipeline.")

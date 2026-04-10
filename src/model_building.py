@@ -24,6 +24,7 @@ from sklearn.metrics import accuracy_score
 
 from utils import load_params, ensure_local_deps
 
+# ----------------- config -----------------
 PARAMS = load_params()
 MB_PARAMS = PARAMS["model_building"]
 
@@ -49,6 +50,7 @@ def ensure_dependencies() -> None:
 
 
 def configure_logging() -> None:
+    # ----------------- logging setup -----------------
     os.makedirs(LOG_DIR, exist_ok=True)
     log_format = "%(asctime)s [%(levelname)s] %(message)s"
     date_format = "%Y-%m-%d %H:%M:%S"
@@ -60,12 +62,14 @@ def configure_logging() -> None:
 
 
 def ensure_directories() -> None:
+    # ----------------- directories -----------------
     for path in (PREPROCESSED_DIR, LOG_DIR, MODEL_DIR):
         os.makedirs(path, exist_ok=True)
     logging.info("Ensured required directories exist.")
 
 
 def load_splits() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # ----------------- load -----------------
     if not os.path.exists(TRAIN_PATH) or not os.path.exists(TEST_PATH):
         raise FileNotFoundError("Preprocessed train/test not found. Run feature_enginnering.py first.")
     train_df = pd.read_csv(TRAIN_PATH)
@@ -75,6 +79,7 @@ def load_splits() -> Tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def split_features_target(train_df: pd.DataFrame, test_df: pd.DataFrame, target: str = TARGET_COL):
+    # ----------------- split features/target -----------------
     if target not in train_df.columns:
         raise KeyError(f"Target column '{target}' not found in train data.")
     X_train = train_df.drop(columns=[target])
@@ -85,6 +90,7 @@ def split_features_target(train_df: pd.DataFrame, test_df: pd.DataFrame, target:
 
 
 def get_models(random_state: int = RANDOM_STATE):
+    # ----------------- model zoo -----------------
     cfg = MB_PARAMS.get("models", {})
 
     lr_cfg = cfg.get("logistic_regression", {})
@@ -121,6 +127,7 @@ def get_models(random_state: int = RANDOM_STATE):
 
 
 def train_and_select(X_train, y_train, X_test, y_test) -> Tuple[str, object, float]:
+    # ----------------- training -----------------
     best_name, best_model, best_acc = None, None, -1.0
     for name, model in get_models():
         logging.info("Training model: %s", name)
@@ -149,12 +156,14 @@ def train_and_select(X_train, y_train, X_test, y_test) -> Tuple[str, object, flo
 
 
 def save_model(model) -> None:
+    # ----------------- save -----------------
     os.makedirs(MODEL_DIR, exist_ok=True)
     joblib.dump(model, MODEL_PATH)
     logging.info("Saved best model to %s", MODEL_PATH)
 
 
 def main() -> None:
+    # ----------------- main -----------------
     ensure_dependencies()
     configure_logging()
     logging.info("Starting model building pipeline.")

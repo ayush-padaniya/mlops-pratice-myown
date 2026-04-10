@@ -1,9 +1,11 @@
+## ----------------- dvc pipeline -----------------
 stages:
+  # ----------------- ingestion stage -----------------
   data_ingestion:
     cmd: python src/data_ingestion.py
     deps:
       - src/data_ingestion.py
-      
+      - params.yaml
     outs:
       - data/raw/train.csv
       - data/raw/test.csv
@@ -14,10 +16,12 @@ stages:
       - data_ingestion.data_dir
       - data_ingestion.raw_subdir
 
+  # ----------------- preprocessing stage -----------------
   data_preprocessing:
     cmd: python src/data_preprocessing.py
     deps:
       - src/data_preprocessing.py
+      - params.yaml
       - data/raw/train.csv
       - data/raw/test.csv
     outs:
@@ -28,10 +32,12 @@ stages:
       - data_preprocessing.processed_subdir
       - data_preprocessing.log_dir
 
+  # ----------------- feature engineering stage -----------------
   feature_engineering:
     cmd: python src/feature_enginnering.py
     deps:
       - src/feature_enginnering.py
+      - params.yaml
       - data/processed/train.csv
       - data/processed/test.csv
     outs:
@@ -42,10 +48,12 @@ stages:
       - feature_engineering.output_subdir
       - feature_engineering.log_dir
 
+  # ----------------- model building stage -----------------
   model_building:
     cmd: python src/model_building.py
     deps:
       - src/model_building.py
+      - params.yaml
       - data/preprocessed/train.csv
       - data/preprocessed/test.csv
     outs:
@@ -59,10 +67,12 @@ stages:
       - model_building.random_state
       - model_building.models
 
+  # ----------------- evaluation stage -----------------
   evaluation:
     cmd: python src/evaluation.py
     deps:
       - src/evaluation.py
+      - params.yaml
       - models/best_model.pkl
       - data/preprocessed/test.csv
     outs:

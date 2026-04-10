@@ -39,7 +39,7 @@ from sklearn.preprocessing import label_binarize
 
 from utils import load_params, ensure_local_deps
 
-# Params and Paths
+# ----------------- config -----------------
 PARAMS = load_params()
 EVAL_PARAMS = PARAMS["evaluation"]
 
@@ -65,6 +65,7 @@ def ensure_dependencies() -> None:
 
 
 def configure_logging() -> None:
+    # ----------------- logging setup -----------------
     os.makedirs(LOG_DIR, exist_ok=True)
     fmt = "%(asctime)s [%(levelname)s] %(message)s"
     datefmt = "%Y-%m-%d %H:%M:%S"
@@ -76,12 +77,14 @@ def configure_logging() -> None:
 
 
 def ensure_directories() -> None:
+    # ----------------- directories -----------------
     for path in (PREPROCESSED_DIR, MODEL_DIR, ARTIFACT_DIR, LOG_DIR):
         os.makedirs(path, exist_ok=True)
     logging.info("Ensured directories exist (data, model, artifact, log).")
 
 
 def load_data_model() -> Tuple[pd.DataFrame, object]:
+    # ----------------- load -----------------
     if not os.path.exists(TEST_PATH):
         raise FileNotFoundError("Test split not found. Run feature_enginnering.py and model_building.py first.")
     if not os.path.exists(MODEL_PATH):
@@ -95,6 +98,7 @@ def load_data_model() -> Tuple[pd.DataFrame, object]:
 
 
 def split_features_target(df: pd.DataFrame, target: str = TARGET_COL):
+    # ----------------- split features/target -----------------
     if target not in df.columns:
         raise KeyError(f"Target column '{target}' missing from test data.")
     X = df.drop(columns=[target])
@@ -103,6 +107,7 @@ def split_features_target(df: pd.DataFrame, target: str = TARGET_COL):
 
 
 def compute_metrics(y_true, y_pred, y_prob) -> Dict[str, float]:
+    # ----------------- metrics -----------------
     is_multi = len(np.unique(y_true)) > 2
     avg = "weighted" if is_multi else "binary"
 
@@ -125,6 +130,7 @@ def compute_metrics(y_true, y_pred, y_prob) -> Dict[str, float]:
 
 
 def plot_roc(y_true, y_prob, path: str):
+    # ----------------- plot roc -----------------
     classes = np.unique(y_true)
     if len(classes) > 2:
         y_true_bin = label_binarize(y_true, classes=classes)
@@ -149,6 +155,7 @@ def plot_roc(y_true, y_prob, path: str):
 
 
 def plot_pr(y_true, y_prob, path: str):
+    # ----------------- plot pr -----------------
     classes = np.unique(y_true)
     if len(classes) > 2:
         y_true_bin = label_binarize(y_true, classes=classes)
@@ -169,6 +176,7 @@ def plot_pr(y_true, y_prob, path: str):
 
 
 def plot_confusion(y_true, y_pred, path: str):
+    # ----------------- plot confusion -----------------
     cm = confusion_matrix(y_true, y_pred)
     plt.figure()
     plt.imshow(cm, cmap="Blues")
@@ -184,6 +192,7 @@ def plot_confusion(y_true, y_pred, path: str):
 
 
 def plot_preds_vs_actual(y_true, y_prob, path: str):
+    # ----------------- plot preds vs actual -----------------
     classes = np.unique(y_true)
     if len(classes) > 2 and y_prob.ndim == 2:
         # Probability of true class for each sample
@@ -212,12 +221,14 @@ def plot_preds_vs_actual(y_true, y_prob, path: str):
 
 
 def save_metrics(metrics: Dict[str, float], path: str):
+    # ----------------- save metrics -----------------
     with open(path, "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2)
     logging.info("Saved metrics to %s", path)
 
 
 def main() -> None:
+    # ----------------- main -----------------
     ensure_dependencies()
     configure_logging()
     logging.info("Starting evaluation pipeline.")

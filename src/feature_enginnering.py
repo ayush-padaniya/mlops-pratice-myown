@@ -17,6 +17,7 @@ import pandas as pd
 
 from utils import load_params, ensure_local_deps
 
+# ----------------- config -----------------
 PARAMS = load_params()
 FE_PARAMS = PARAMS["feature_engineering"]
 
@@ -33,6 +34,7 @@ TEST_PREPROCESSED = os.path.join(PREPROCESSED_DIR, "test.csv")
 
 
 def configure_logging() -> None:
+    # ----------------- logging setup -----------------
     os.makedirs(LOG_DIR, exist_ok=True)
     log_format = "%(asctime)s [%(levelname)s] %(message)s"
     date_format = "%Y-%m-%d %H:%M:%S"
@@ -44,12 +46,14 @@ def configure_logging() -> None:
 
 
 def ensure_directories() -> None:
+    # ----------------- directories -----------------
     for path in (DATA_DIR, PROCESSED_DIR, PREPROCESSED_DIR, LOG_DIR):
         os.makedirs(path, exist_ok=True)
     logging.info("Ensured data directories exist.")
 
 
 def load_processed() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # ----------------- load -----------------
     if not os.path.exists(TRAIN_PROCESSED) or not os.path.exists(TEST_PROCESSED):
         raise FileNotFoundError("Processed train/test not found. Run data_preprocessing.py first.")
     train_df = pd.read_csv(TRAIN_PROCESSED)
@@ -66,6 +70,7 @@ def safe_divide(numerator, denominator):
 
 
 def add_features(df: pd.DataFrame) -> pd.DataFrame:
+    # ----------------- feature engineering -----------------
     df = df.copy()
 
     # Feature engineering is meaningful only if original columns exist; otherwise skip.
@@ -151,6 +156,7 @@ def add_features(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def save_outputs(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
+    # ----------------- save -----------------
     logging.info("Saving engineered train to %s", TRAIN_PREPROCESSED)
     train_df.to_csv(TRAIN_PREPROCESSED, index=False)
     logging.info("Saving engineered test to %s", TEST_PREPROCESSED)
@@ -159,6 +165,7 @@ def save_outputs(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    # ----------------- main -----------------
     ensure_local_deps()
     configure_logging()
     logging.info("Starting feature engineering pipeline.")

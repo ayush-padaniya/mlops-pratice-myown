@@ -2,7 +2,7 @@ import os
 import sys
 from typing import Any, Dict
 
-
+# ----------------- params loader -----------------
 def load_params(params_path: str = None) -> Dict[str, Any]:
     """
     Load params.yaml (YAML) and return as dict.
@@ -26,6 +26,7 @@ def load_params(params_path: str = None) -> Dict[str, Any]:
     return params
 
 
+# ----------------- local deps path -----------------
 def ensure_local_deps() -> None:
     """Ensure ./ .deps is on sys.path for local offline installs."""
     deps = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".deps")

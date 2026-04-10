@@ -1,3 +1,4 @@
+## ----------------- ingestion -----------------
 data_ingestion:
   url: https://raw.githubusercontent.com/ayush-padaniya/dataset/refs/heads/main/video_game_dataset.csv
   test_size: 0.2
@@ -5,16 +6,19 @@ data_ingestion:
   data_dir: data
   raw_subdir: raw
 
+## ----------------- preprocessing -----------------
 data_preprocessing:
   target_col: success_label
   processed_subdir: processed
   log_dir: log
 
+## ----------------- feature engineering -----------------
 feature_engineering:
   source_subdir: processed        # expected input from preprocessing
   output_subdir: preprocessed
   log_dir: log
 
+## ----------------- model building -----------------
 model_building:
   target_col: success_label
   preprocessed_subdir: preprocessed
@@ -43,6 +47,7 @@ model_building:
       max_depth: 5
       random_state: 42
 
+## ----------------- evaluation -----------------
 evaluation:
   target_col: success_label
   preprocessed_subdir: preprocessed

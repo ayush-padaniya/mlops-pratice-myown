@@ -19,6 +19,7 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from utils import load_params, ensure_local_deps
 
+# ----------------- config -----------------
 PARAMS = load_params()
 PREP_PARAMS = PARAMS["data_preprocessing"]
 
@@ -37,6 +38,7 @@ TEST_PROCESSED = os.path.join(PROCESSED_DIR, "test.csv")
 
 
 def configure_logging() -> None:
+    # ----------------- logging setup -----------------
     os.makedirs(LOG_DIR, exist_ok=True)
     log_format = "%(asctime)s [%(levelname)s] %(message)s"
     date_format = "%Y-%m-%d %H:%M:%S"
@@ -48,12 +50,14 @@ def configure_logging() -> None:
 
 
 def ensure_directories() -> None:
+    # ----------------- directories -----------------
     for path in (DATA_DIR, RAW_DIR, PROCESSED_DIR, LOG_DIR):
         os.makedirs(path, exist_ok=True)
     logging.info("Ensured data directories exist.")
 
 
 def load_raw_splits() -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # ----------------- load -----------------
     if not os.path.exists(TRAIN_RAW) or not os.path.exists(TEST_RAW):
         raise FileNotFoundError("Raw train/test not found. Run data_ingestion.py first.")
     train_df = pd.read_csv(TRAIN_RAW)
@@ -64,6 +68,7 @@ def load_raw_splits() -> Tuple[pd.DataFrame, pd.DataFrame]:
 
 def run_eda(train_df: pd.DataFrame, test_df: pd.DataFrame, target: str = TARGET_COL) -> None:
     """Lightweight EDA logged only (no plots)."""
+    # ----------------- eda -----------------
     logging.info("=== EDA: Shapes === train: %s, test: %s", train_df.shape, test_df.shape)
 
     # Target distribution
@@ -87,6 +92,7 @@ def run_eda(train_df: pd.DataFrame, test_df: pd.DataFrame, target: str = TARGET_
 
 
 def basic_clean(df: pd.DataFrame) -> pd.DataFrame:
+    # ----------------- cleaning -----------------
     from pandas.api.types import is_numeric_dtype
 
     df = df.drop_duplicates().copy()
@@ -100,6 +106,7 @@ def basic_clean(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_transformer(df: pd.DataFrame, target: str = TARGET_COL) -> ColumnTransformer:
+    # ----------------- transformer -----------------
     from pandas.api.types import is_numeric_dtype
 
     numeric_cols = [c for c in df.columns if c != target and is_numeric_dtype(df[c])]
@@ -123,6 +130,7 @@ def build_transformer(df: pd.DataFrame, target: str = TARGET_COL) -> ColumnTrans
 def transform_split(
     ct: ColumnTransformer, train_df: pd.DataFrame, test_df: pd.DataFrame, target: str = TARGET_COL
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
+    # ----------------- transform -----------------
     y_train = train_df[target].reset_index(drop=True)
     y_test = test_df[target].reset_index(drop=True)
 
@@ -150,6 +158,7 @@ def transform_split(
 
 
 def save_processed(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
+    # ----------------- save -----------------
     logging.info("Saving processed train to %s", TRAIN_PROCESSED)
     train_df.to_csv(TRAIN_PROCESSED, index=False)
     logging.info("Saving processed test to %s", TEST_PROCESSED)
@@ -158,6 +167,7 @@ def save_processed(train_df: pd.DataFrame, test_df: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    # ----------------- main -----------------
     ensure_local_deps()
     configure_logging()
     logging.info("Starting data preprocessing pipeline.")
