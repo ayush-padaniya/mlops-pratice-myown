@@ -16,3 +16,12 @@
 2026-04-10 13:48:08 [INFO] Saving engineered test to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\preprocessed\test.csv
 2026-04-10 13:48:26 [INFO] Feature-engineered splits saved.
 2026-04-10 13:48:26 [INFO] Feature engineering completed successfully.
+2026-04-10 14:19:06 [INFO] Starting feature engineering pipeline.
+2026-04-10 14:19:06 [INFO] Ensured data directories exist.
+2026-04-10 14:19:39 [INFO] Loaded processed splits: train=40000 rows, test=10000 rows
+2026-04-10 14:19:39 [WARNING] Skipping engineered feature creation because processed data lacks original columns. Missing: ['avg_playtime_hours', 'awards_won', 'dev_budget_million_usd', 'discount_offered_pct', 'dlc_count', 'launch_bugs_reported', 'marketing_budget_million_usd', 'num_reviews', 'patches_released', 'peak_concurrent_players', 'positive_review_pct', 'price_usd', 'story_length_hours', 'units_sold_million']
+2026-04-10 14:19:39 [WARNING] Skipping engineered feature creation because processed data lacks original columns. Missing: ['avg_playtime_hours', 'awards_won', 'dev_budget_million_usd', 'discount_offered_pct', 'dlc_count', 'launch_bugs_reported', 'marketing_budget_million_usd', 'num_reviews', 'patches_released', 'peak_concurrent_players', 'positive_review_pct', 'price_usd', 'story_length_hours', 'units_sold_million']
+2026-04-10 14:19:39 [INFO] Saving engineered train to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\preprocessed\train.csv
+2026-04-10 14:21:11 [INFO] Saving engineered test to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\preprocessed\test.csv
+2026-04-10 14:21:36 [INFO] Feature-engineered splits saved.
+2026-04-10 14:21:36 [INFO] Feature engineering completed successfully.

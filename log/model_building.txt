@@ -22,3 +22,19 @@
 2026-04-10 14:04:35 [INFO] Best model: LogisticRegression (accuracy=0.9843)
 2026-04-10 14:04:35 [INFO] Saved best model to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\models\best_model.pkl
 2026-04-10 14:04:35 [INFO] Model building completed. Best: LogisticRegression (acc=0.9843)
+2026-04-10 14:21:43 [INFO] Starting model building pipeline.
+2026-04-10 14:21:43 [INFO] Ensured required directories exist.
+2026-04-10 14:22:08 [INFO] Loaded preprocessed splits: train=40000 rows, test=10000 rows
+2026-04-10 14:22:08 [INFO] Training model: LogisticRegression
+2026-04-10 14:31:29 [INFO] Starting model building pipeline.
+2026-04-10 14:31:29 [INFO] Ensured required directories exist.
+2026-04-10 14:31:52 [INFO] Loaded preprocessed splits: train=40000 rows, test=10000 rows
+2026-04-10 14:31:53 [INFO] Training model: LogisticRegression
+2026-04-10 14:34:12 [INFO] LogisticRegression accuracy: 0.9848
+2026-04-10 14:34:12 [INFO] Training model: RandomForest
+2026-04-10 14:34:14 [INFO] RandomForest accuracy: 0.5800
+2026-04-10 14:34:14 [INFO] Training model: GradientBoosting
+2026-04-10 14:55:08 [INFO] GradientBoosting accuracy: 0.9453
+2026-04-10 14:55:08 [INFO] Best model: LogisticRegression (accuracy=0.9848)
+2026-04-10 14:55:08 [INFO] Saved best model to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\models\best_model.pkl
+2026-04-10 14:55:08 [INFO] Model building completed. Best: LogisticRegression (acc=0.9848)

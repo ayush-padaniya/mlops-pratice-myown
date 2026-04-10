@@ -3,7 +3,7 @@ stages:
     cmd: python src/data_ingestion.py
     deps:
       - src/data_ingestion.py
-      - params.yaml
+      
     outs:
       - data/raw/train.csv
       - data/raw/test.csv
@@ -18,7 +18,6 @@ stages:
     cmd: python src/data_preprocessing.py
     deps:
       - src/data_preprocessing.py
-      - params.yaml
       - data/raw/train.csv
       - data/raw/test.csv
     outs:
@@ -33,7 +32,6 @@ stages:
     cmd: python src/feature_enginnering.py
     deps:
       - src/feature_enginnering.py
-      - params.yaml
       - data/processed/train.csv
       - data/processed/test.csv
     outs:
@@ -48,7 +46,6 @@ stages:
     cmd: python src/model_building.py
     deps:
       - src/model_building.py
-      - params.yaml
       - data/preprocessed/train.csv
       - data/preprocessed/test.csv
     outs:
@@ -66,7 +63,6 @@ stages:
     cmd: python src/evaluation.py
     deps:
       - src/evaluation.py
-      - params.yaml
       - models/best_model.pkl
       - data/preprocessed/test.csv
     outs:
