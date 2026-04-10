@@ -92,3 +92,97 @@ discount_offered_pct  40000.0    39.382450  23.135350     0.00    19.00    39.00
 2026-04-10 12:00:56 [INFO] Saving processed test to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\processed\test.csv
 2026-04-10 12:01:12 [INFO] Processed splits saved.
 2026-04-10 12:01:12 [INFO] Data preprocessing completed successfully.
+2026-04-10 13:44:51 [INFO] Starting data preprocessing pipeline.
+2026-04-10 13:44:51 [INFO] Ensured data directories exist.
+2026-04-10 13:44:52 [INFO] Loaded raw splits: train=40000 rows, test=10000 rows
+2026-04-10 13:44:52 [INFO] === EDA: Shapes === train: (40000, 48), test: (10000, 48)
+2026-04-10 13:44:52 [INFO] Target distribution (train):
+success_label
+Hit            0.438875
+Blockbuster    0.358725
+Average        0.176200
+Flop           0.026200
+Name: proportion, dtype: float64
+2026-04-10 13:44:52 [INFO] Missing values % (train) top 10:
+controller_support    34.03
+game_title             0.00
+platform               0.00
+genre                  0.00
+publisher              0.00
+release_year           0.00
+release_month          0.00
+developer              0.00
+game_mode              0.00
+region                 0.00
+dtype: float64
+2026-04-10 13:44:52 [INFO] Column dtypes:
+game_title                        object
+genre                             object
+platform                          object
+developer                         object
+publisher                         object
+release_year                       int64
+release_month                      int64
+age_rating                        object
+game_mode                         object
+region                            object
+language_support                  object
+theme                             object
+art_style                         object
+game_engine                       object
+monetization_model                object
+sequel_number                      int64
+price_usd                        float64
+discount_offered_pct               int64
+dev_budget_million_usd           float64
+marketing_budget_million_usd     float64
+metacritic_score                   int64
+user_score_out_of_10             float64
+positive_review_pct              float64
+num_reviews                        int64
+units_sold_million               float64
+peak_concurrent_players            int64
+avg_playtime_hours               float64
+dlc_count                          int64
+has_open_world                    object
+has_microtransactions             object
+has_mod_support                   object
+online_features                   object
+vr_support                        object
+controller_support                object
+file_size_gb                     float64
+num_playable_characters            int64
+map_size_sq_km                   float64
+story_length_hours               float64
+num_achievements                   int64
+launch_bugs_reported               int64
+patches_released                   int64
+awards_won                         int64
+franchise_age_years                int64
+developer_prev_hits                int64
+social_media_mentions_k          float64
+youtube_trailer_views_million    float64
+twitch_peak_viewers_k            float64
+success_label                     object
+dtype: object
+2026-04-10 13:44:52 [INFO] Numeric describe (first 5 cols):
+                        count         mean        std      min      25%      50%      75%      max
+release_year          40000.0  2012.104675   7.192021  2000.00  2006.00  2012.00  2018.00  2024.00
+release_month         40000.0     6.514250   3.443065     1.00     4.00     7.00    10.00    12.00
+sequel_number         40000.0     2.382400   1.414168     1.00     1.00     2.00     4.00     5.00
+price_usd             40000.0    36.851125  20.444676     9.99    14.99    39.99    49.99    69.99
+discount_offered_pct  40000.0    39.382450  23.135350     0.00    19.00    39.00    59.00    79.00
+2026-04-10 13:44:52 [INFO] Sample train rows:
+          game_title   genre         platform  ... youtube_trailer_views_million twitch_peak_viewers_k  success_label
+0  Shadow Warriors 4  Horror           Mobile  ...                          2.39                  30.8        Average
+1     Epic Legends 9  Sports         Xbox One  ...                          1.17                   4.1    Blockbuster
+2    Rise of Dynasty     RPG  Nintendo Switch  ...                          0.38                  32.8    Blockbuster
+
+[3 rows x 48 columns]
+2026-04-10 13:44:52 [INFO] Transformer built with 28 numeric and 19 categorical columns.
+2026-04-10 13:44:52 [INFO] Fitting transformer on train features.
+2026-04-10 13:44:52 [INFO] Transforming test features.
+2026-04-10 13:44:52 [INFO] Saving processed train to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\processed\train.csv
+2026-04-10 13:46:00 [INFO] Saving processed test to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\processed\test.csv
+2026-04-10 13:46:17 [INFO] Processed splits saved.
+2026-04-10 13:46:17 [INFO] Data preprocessing completed successfully.

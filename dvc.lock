@@ -1,0 +1,177 @@
+schema: '2.0'
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+    - path: params.yaml
+      hash: md5
+      md5: 0a716750b7502c35ef6107743be6917e
+      size: 1063
+    - path: src/data_ingestion.py
+      hash: md5
+      md5: b19cf7d58407e37521f32f6e699d5a89
+      size: 3134
+    params:
+      params.yaml:
+        data_ingestion.data_dir: data
+        data_ingestion.random_state: 42
+        data_ingestion.raw_subdir: raw
+        data_ingestion.test_size: 0.2
+        data_ingestion.url: 
+          https://raw.githubusercontent.com/ayush-padaniya/dataset/refs/heads/main/video_game_dataset.csv
+    outs:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 279b2d482c1412e211bc88766ecd3c75
+      size: 2865654
+    - path: data/raw/train.csv
+      hash: md5
+      md5: b6e566ef70b8947817bc678d19b60d35
+      size: 11464669
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+    - path: data/raw/test.csv
+      hash: md5
+      md5: 279b2d482c1412e211bc88766ecd3c75
+      size: 2865654
+    - path: data/raw/train.csv
+      hash: md5
+      md5: b6e566ef70b8947817bc678d19b60d35
+      size: 11464669
+    - path: params.yaml
+      hash: md5
+      md5: 0a716750b7502c35ef6107743be6917e
+      size: 1063
+    - path: src/data_preprocessing.py
+      hash: md5
+      md5: c224bda3211acb6aa29f76a9b30f39ed
+      size: 6592
+    params:
+      params.yaml:
+        data_preprocessing.log_dir: log
+        data_preprocessing.processed_subdir: processed
+        data_preprocessing.target_col: success_label
+    outs:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 92a06b3f55f767bb3337ca9f36d5e105
+      size: 183305809
+    - path: data/processed/train.csv
+      hash: md5
+      md5: d1918d00c25b651b44e3eba8870ed4fe
+      size: 732801541
+  feature_engineering:
+    cmd: python src/feature_enginnering.py
+    deps:
+    - path: data/processed/test.csv
+      hash: md5
+      md5: 92a06b3f55f767bb3337ca9f36d5e105
+      size: 183305809
+    - path: data/processed/train.csv
+      hash: md5
+      md5: d1918d00c25b651b44e3eba8870ed4fe
+      size: 732801541
+    - path: params.yaml
+      hash: md5
+      md5: 0a716750b7502c35ef6107743be6917e
+      size: 1063
+    - path: src/feature_enginnering.py
+      hash: md5
+      md5: e7de79811a7fdddd1ed3d982a5abd877
+      size: 6285
+    params:
+      params.yaml:
+        feature_engineering.log_dir: log
+        feature_engineering.output_subdir: preprocessed
+        feature_engineering.source_subdir: processed
+    outs:
+    - path: data/preprocessed/test.csv
+      hash: md5
+      md5: 938ee1f3f000b3412bedb1ef246ca62c
+      size: 183199518
+    - path: data/preprocessed/train.csv
+      hash: md5
+      md5: 0d5a704360d8fdc4eedd69e94e96b0a3
+      size: 732375798
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+    - path: data/preprocessed/test.csv
+      hash: md5
+      md5: 938ee1f3f000b3412bedb1ef246ca62c
+      size: 183199518
+    - path: data/preprocessed/train.csv
+      hash: md5
+      md5: 0d5a704360d8fdc4eedd69e94e96b0a3
+      size: 732375798
+    - path: params.yaml
+      hash: md5
+      md5: 0a716750b7502c35ef6107743be6917e
+      size: 1063
+    - path: src/model_building.py
+      hash: md5
+      md5: d93b21a638addbef014bd40b5eeb754e
+      size: 6136
+    params:
+      params.yaml:
+        model_building.accuracy_threshold: 0.97
+        model_building.log_dir: log
+        model_building.model_dir: models
+        model_building.models:
+          logistic_regression:
+            max_iter: 200
+            n_jobs: -1
+            penalty: l2
+            C: 1.0
+            solver: lbfgs
+          random_forest:
+            n_estimators: 400
+            max_depth:
+            n_jobs: -1
+            random_state: 42
+          gradient_boosting:
+            n_estimators: 100
+            learning_rate: 0.1
+            max_depth: 3
+            random_state: 42
+        model_building.preprocessed_subdir: preprocessed
+        model_building.random_state: 42
+        model_building.target_col: success_label
+    outs:
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 8b7ee622158ddbaac76bc452892f9ea8
+      size: 293527
+  evaluation:
+    cmd: python src/evaluation.py
+    deps:
+    - path: data/preprocessed/test.csv
+      hash: md5
+      md5: 938ee1f3f000b3412bedb1ef246ca62c
+      size: 183199518
+    - path: models/best_model.pkl
+      hash: md5
+      md5: 8b7ee622158ddbaac76bc452892f9ea8
+      size: 293527
+    - path: params.yaml
+      hash: md5
+      md5: 0a716750b7502c35ef6107743be6917e
+      size: 1063
+    - path: src/evaluation.py
+      hash: md5
+      md5: 9f0ea6ef1f637fa76024b6d48b163386
+      size: 8645
+    params:
+      params.yaml:
+        evaluation.artifact_dir: artifact
+        evaluation.log_dir: log
+        evaluation.model_dir: models
+        evaluation.preprocessed_subdir: preprocessed
+        evaluation.target_col: success_label
+    outs:
+    - path: artifact
+      hash: md5
+      md5: 1fb0dd416e0a8d9502155a198c0b4203.dir
+      size: 85550
+      nfiles: 5

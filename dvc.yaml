@@ -1,0 +1,79 @@
+stages:
+  data_ingestion:
+    cmd: python src/data_ingestion.py
+    deps:
+      - src/data_ingestion.py
+      - params.yaml
+    outs:
+      - data/raw/train.csv
+      - data/raw/test.csv
+    params:
+      - data_ingestion.url
+      - data_ingestion.test_size
+      - data_ingestion.random_state
+      - data_ingestion.data_dir
+      - data_ingestion.raw_subdir
+
+  data_preprocessing:
+    cmd: python src/data_preprocessing.py
+    deps:
+      - src/data_preprocessing.py
+      - params.yaml
+      - data/raw/train.csv
+      - data/raw/test.csv
+    outs:
+      - data/processed/train.csv
+      - data/processed/test.csv
+    params:
+      - data_preprocessing.target_col
+      - data_preprocessing.processed_subdir
+      - data_preprocessing.log_dir
+
+  feature_engineering:
+    cmd: python src/feature_enginnering.py
+    deps:
+      - src/feature_enginnering.py
+      - params.yaml
+      - data/processed/train.csv
+      - data/processed/test.csv
+    outs:
+      - data/preprocessed/train.csv
+      - data/preprocessed/test.csv
+    params:
+      - feature_engineering.source_subdir
+      - feature_engineering.output_subdir
+      - feature_engineering.log_dir
+
+  model_building:
+    cmd: python src/model_building.py
+    deps:
+      - src/model_building.py
+      - params.yaml
+      - data/preprocessed/train.csv
+      - data/preprocessed/test.csv
+    outs:
+      - models/best_model.pkl
+    params:
+      - model_building.target_col
+      - model_building.preprocessed_subdir
+      - model_building.model_dir
+      - model_building.log_dir
+      - model_building.accuracy_threshold
+      - model_building.random_state
+      - model_building.models
+
+  evaluation:
+    cmd: python src/evaluation.py
+    deps:
+      - src/evaluation.py
+      - params.yaml
+      - models/best_model.pkl
+      - data/preprocessed/test.csv
+    outs:
+      - artifact
+    params:
+      - evaluation.target_col
+      - evaluation.preprocessed_subdir
+      - evaluation.model_dir
+      - evaluation.artifact_dir
+      - evaluation.log_dir

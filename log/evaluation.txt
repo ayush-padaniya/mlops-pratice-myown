@@ -9,3 +9,14 @@
 2026-04-10 13:02:25 [INFO] Saved preds-vs-actual plot to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\preds_vs_actual.png
 2026-04-10 13:02:26 [INFO] Saved confusion matrix to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\confusion_matrix.png
 2026-04-10 13:02:26 [INFO] Evaluation completed.
+2026-04-10 14:04:39 [INFO] Starting evaluation pipeline.
+2026-04-10 14:04:39 [INFO] Ensured directories exist (data, model, artifact, log).
+2026-04-10 14:04:39 [INFO] Loading test data from C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\preprocessed\test.csv
+2026-04-10 14:04:43 [INFO] Loading model from C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\models\best_model.pkl
+2026-04-10 14:04:44 [INFO] Metrics: {'accuracy': 0.9843, 'precision': 0.9842699365477402, 'recall': 0.9843, 'f1': 0.9842441980307906, 'roc_auc': 0.9996429295164202}
+2026-04-10 14:04:44 [INFO] Saved metrics to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\metrics.json
+2026-04-10 14:04:44 [INFO] Saved ROC curve to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\roc_curve.png
+2026-04-10 14:04:44 [INFO] Saved Precision-Recall curve to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\precision_recall_curve.png
+2026-04-10 14:04:45 [INFO] Saved preds-vs-actual plot to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\preds_vs_actual.png
+2026-04-10 14:04:45 [INFO] Saved confusion matrix to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\artifact\confusion_matrix.png
+2026-04-10 14:04:45 [INFO] Evaluation completed.
