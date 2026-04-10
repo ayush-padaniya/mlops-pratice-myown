@@ -1,0 +1,49 @@
+data_ingestion:
+  url: https://raw.githubusercontent.com/ayush-padaniya/dataset/refs/heads/main/video_game_dataset.csv
+  test_size: 0.2
+  random_state: 42
+  data_dir: data
+  raw_subdir: raw
+
+data_preprocessing:
+  target_col: success_label
+  processed_subdir: processed
+  log_dir: log
+
+feature_engineering:
+  source_subdir: processed        # expected input from preprocessing
+  output_subdir: preprocessed
+  log_dir: log
+
+model_building:
+  target_col: success_label
+  preprocessed_subdir: preprocessed
+  model_dir: models
+  log_dir: log
+  accuracy_threshold: 0.97
+  random_state: 42
+  models:
+    logistic_regression:
+      max_iter: 200
+      n_jobs: -1
+      penalty: l2
+      C: 1.0
+      solver: lbfgs
+
+    random_forest:
+      n_estimators: 400
+      max_depth: null
+      n_jobs: -1
+      random_state: 42
+    gradient_boosting:
+      n_estimators: 100
+      learning_rate: 0.1
+      max_depth: 3
+      random_state: 42
+
+evaluation:
+  target_col: success_label
+  preprocessed_subdir: preprocessed
+  model_dir: models
+  artifact_dir: artifact
+  log_dir: log

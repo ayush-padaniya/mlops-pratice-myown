@@ -1,0 +1,10 @@
+2026-04-10 11:55:39 [INFO] Starting data ingestion pipeline.
+2026-04-10 11:55:39 [INFO] Ensured data directories exist: C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\raw
+2026-04-10 11:55:39 [INFO] Downloading dataset from https://raw.githubusercontent.com/ayush-padaniya/dataset/refs/heads/main/video_game_dataset.csv
+2026-04-10 11:55:44 [INFO] Downloaded dataset with 50000 rows and 48 columns
+2026-04-10 11:55:44 [INFO] Splitting dataset: test_size=0.20, random_state=42
+2026-04-10 11:55:44 [INFO] Split complete: train=40000 rows, test=10000 rows
+2026-04-10 11:55:44 [INFO] Saving train split to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\raw\train.csv
+2026-04-10 11:55:45 [INFO] Saving test split to C:\Users\Aayush\Pictures\MLOPS Pratice\mlops-pratice-myown\src\..\data\raw\test.csv
+2026-04-10 11:55:45 [INFO] Finished saving splits.
+2026-04-10 11:55:45 [INFO] Data ingestion completed successfully.
